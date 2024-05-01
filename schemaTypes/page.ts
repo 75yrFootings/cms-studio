@@ -1,11 +1,11 @@
 import {defineField, defineType} from 'sanity'
-import { FaCar } from 'react-icons/fa'
+import { FaRegFile } from 'react-icons/fa'
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
+  name: 'page',
+  title: 'Pages',
   type: 'document',
-  icon: FaCar,
+  icon: FaRegFile,
   fields: [
     defineField({
       name: 'title',
@@ -22,10 +22,9 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: {type: 'author'},
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
     }),
     defineField({
       name: 'mainImage',
@@ -34,17 +33,6 @@ export default defineType({
       options: {
         hotspot: true,
       },
-    }),
-    defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [{type: 'reference', to: {type: 'category'}}],
-    }),
-    defineField({
-      name: 'publishedAt',
-      title: 'Published at',
-      type: 'datetime',
     }),
     defineField({
       name: 'body',
@@ -56,12 +44,13 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      slug: 'slug',
+      published: 'publishedAt',
       media: 'mainImage',
     },
     prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
-    },
-  },
+      const { slug } = selection 
+      return {...selection, subtitle: `${slug.current}` }
+    }
+  }
 })
