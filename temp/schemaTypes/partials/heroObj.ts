@@ -5,7 +5,7 @@ export default defineType({
   name: 'hero',
   type: 'object',
   options: {
-    collapsible: true,
+    collapsible: false,
   },
   fields: [
     {

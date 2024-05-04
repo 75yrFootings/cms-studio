@@ -1,7 +1,7 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import { FaHome } from "react-icons/fa"
 
-export const FrontPage = defineType({
+export default defineType({
   name: 'frontPage',
   title: 'Home Page',
   type: 'document',
@@ -11,24 +11,16 @@ export const FrontPage = defineType({
     {name: 'form', title: 'Call To Action'},
   ],
   fields: [
-    defineField({
-      title: 'Hero Section',
-      name: 'heroSection',
-      type: 'heroBlock'
-    }),
+    defineField({name: 'title', type: 'string'}),
     defineField({
       name: 'pageBuilder',
       title: 'Page Builder',
       type: 'array',
       of: [
         defineArrayMember({
-          name: 'contentBlock',
-          type: 'contentBlock'
+          name: 'heroBlock',
+          type: 'heroBlock',
         }),
-        // defineArrayMember({
-        //   name: 'heroBlock',
-        //   type: 'heroBlock',
-        // }),
         defineArrayMember({
           name: 'textWithImage',
           type: 'textWithImage',

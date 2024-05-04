@@ -1,56 +1,97 @@
-import {defineField, defineType} from 'sanity'
-import { FaRegFile } from 'react-icons/fa'
+import {defineField, defineType, defineArrayMember, ValidationContext, CustomValidatorResult} from 'sanity'
+import {DocumentIcon} from '@sanity/icons'
 
-export default defineType({
+type hasTypeString = {_type: string}
+
+export function hasType(doc: any): doc is hasTypeString {
+  return '_type' in doc
+}
+
+export const Page = defineType({
   name: 'page',
-  title: 'Pages',
+  title: 'Page',
+  icon: DocumentIcon,
   type: 'document',
-  icon: FaRegFile,
   fields: [
     defineField({
-      name: 'title',
       title: 'Title',
+      name: 'title',
       type: 'string',
+      validation: (rule) =>
+        rule.custom(
+          (title: string | undefined, context: ValidationContext): CustomValidatorResult => {
+            if (context && context.path && context.path.length > 1) {
+              return true
+            } else {
+              return title !== undefined && title.length > 0 ? true : 'title is required'
+            }
+          },
+        ),
     }),
     defineField({
       name: 'slug',
-      title: 'Slug',
+      title: 'Slug (URL)',
       type: 'slug',
       options: {
-        source: 'title',
-        maxLength: 96,
+        source:'title',
+        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
+        isUnique: async (value, context) => {
+          if (hasType(context.parent)) {
+            const currentSchemaType = context.parent._type
+            const docsWithSameSlug = await context
+              .getClient({apiVersion: '2022-03-07'})
+              .fetch(`*[_type=="${currentSchemaType}" && slug== "value"]`);
+              return docsWithSameSlug.length === 0;
+          } else {
+            return context.defaultIsUnique(value, context)
+          }
+        },
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'publishedAt',
-      title: 'Published at',
+      name: 'date',
+      title: 'Date',
       type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'mainImage',
-      title: 'Main image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
+      name: 'pageBuilder',
+      title: 'Page Builder',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          name: 'contentBlock',
+          type: 'contentBlock'
+        }),
+        defineArrayMember({
+          name: 'heroBlock',
+          type: 'heroBlock',
+        }),
+        defineArrayMember({
+          name: 'textWithImage',
+          type: 'textWithImage',
+        }),
+        defineArrayMember({
+          name: 'gallery',
+          type: 'gallery',
+        }),
+        defineArrayMember({
+          name: 'cta',
+          type: 'cta',
+        })
+      ]
     }),
   ],
-
-  preview: {
-    select: {
-      title: 'title',
-      slug: 'slug',
-      published: 'publishedAt',
-      media: 'mainImage',
-    },
-    prepare(selection) {
-      const { slug } = selection 
-      return {...selection, subtitle: `${slug.current}` }
-    }
-  }
+  // preview: {
+  //     select: {
+  //         title: 'slug.current',
+  //         subtitle: 'title',
+  //         media: 'picture'
+  //     },
+  //     prepare(selection) {
+  //         return selection
+  //     }
+  // }
 })

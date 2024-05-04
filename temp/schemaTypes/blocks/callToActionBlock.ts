@@ -1,19 +1,17 @@
 import {defineField, defineType} from 'sanity'
 
-export const Category = defineType({
-  name: 'category',
-  title: 'Category',
+export const callToActionType = defineType({
+  name: 'cta',
   type: 'document',
+  title: 'Call To Action',
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
       type: 'string',
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: 'link',
+      type: 'url',
     }),
   ],
 })

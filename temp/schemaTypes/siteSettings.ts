@@ -1,9 +1,14 @@
 import {defineField, defineType} from 'sanity'
+import { FaGear } from "react-icons/fa6";
 
-export const SiteSettings = defineType({
+export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
+  icon: FaGear,
+  groups: [
+    { name: 'navMenu', title: 'Navigation'}
+  ],
   fields: [
     defineField({
       name: 'siteName',

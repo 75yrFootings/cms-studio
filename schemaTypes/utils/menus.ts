@@ -1,13 +1,13 @@
 import {defineField, defineType} from 'sanity'
 
-export const SiteSettings = defineType({
-  name: 'siteSettings',
-  title: 'Site Settings',
+export const Menu = defineType({
+  name: 'menu',
+  title: 'Menu',
   type: 'document',
   fields: [
     defineField({
-      name: 'siteName',
-      title: 'Site Name',
+      name: 'title',
+      title: 'Menu Title',
       type: 'string',
     }),
     
