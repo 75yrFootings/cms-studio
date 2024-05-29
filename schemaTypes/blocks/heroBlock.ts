@@ -1,11 +1,11 @@
 import {defineField, defineType} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
+import {ImageIcon} from '@sanity/icons'
 
 export const Hero = defineType({
   name: 'heroBlock',
   type: 'object',
   title: 'Hero',
-  icon: DocumentTextIcon,
+  icon: ImageIcon,
   fields: [
     defineField({
       name: 'heading',
@@ -13,12 +13,19 @@ export const Hero = defineType({
     }),
     defineField({
       name: 'tagline',
-      type: 'string',
+      type: 'text',
+    }),
+    defineField({
+      name: 'mediaType',
+      type: 'boolean',
+      title: 'Image | Video',
     }),
     defineField({
       name: 'image',
       type: 'image',
+      title: 'Image Background',
       options: {hotspot: true},
+      hidden: ({parent}) => parent?.mediaType,
       fields: [
         defineField({
           name: 'alt',
@@ -26,6 +33,12 @@ export const Hero = defineType({
           title: 'Image Alt Text',
         }),
       ],
+    }),
+    defineField({
+      name: 'video',
+      type: 'file',
+      title: 'Video Background',
+      hidden: ({parent}) => !parent?.mediaType,
     }),
     defineField({
       title: 'Button',
@@ -42,7 +55,7 @@ export const Hero = defineType({
       return {
         title: title || 'Untitled',
         subtitle: 'Hero',
-        media: image || DocumentTextIcon,
+        media: image || ImageIcon,
       }
     }
   }

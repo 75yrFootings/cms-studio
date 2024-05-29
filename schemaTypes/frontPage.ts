@@ -7,28 +7,36 @@ export const FrontPage = defineType({
   type: 'document',
   icon: FaHome,
   groups: [
-    {name: 'hero', title: 'Hero Section'},
-    {name: 'form', title: 'Call To Action'},
+    { name: 'main', title: 'Main', default: true},
+    { name: 'seo', title: 'SEO'}
   ],
   fields: [
     defineField({
+      name: 'meta',
+      title: 'SEO',
+      type: 'metaTags',
+      group: 'seo',
+    }),
+    defineField({
       title: 'Hero Section',
       name: 'heroSection',
-      type: 'heroBlock'
+      type: 'heroBlock',
+      group: ['main'],
+      options: {
+        collapsible: true,
+        collapsed: true,
+      }
     }),
     defineField({
       name: 'pageBuilder',
       title: 'Page Builder',
+      group: ['main'],
       type: 'array',
       of: [
         defineArrayMember({
           name: 'contentBlock',
           type: 'contentBlock'
         }),
-        // defineArrayMember({
-        //   name: 'heroBlock',
-        //   type: 'heroBlock',
-        // }),
         defineArrayMember({
           name: 'textWithImage',
           type: 'textWithImage',
@@ -40,7 +48,23 @@ export const FrontPage = defineType({
         defineArrayMember({
           name: 'cta',
           type: 'cta',
-        })
+        }),
+        defineArrayMember({
+          name: 'jumbotron',
+          type: 'jumbotron',
+        }),
+        defineArrayMember({
+          name: 'faqs',
+          type: 'faqs',
+        }),
+        defineArrayMember({
+          name: 'columnsBlock',
+          type: 'columnsBlock',
+        }),
+        defineArrayMember({
+          name: 'testimonialsBlock',
+          type: 'testimonialsBlock',
+        }),
       ]
     }),
   ]

@@ -5,6 +5,7 @@ export const ContentBlock = defineType({
   title: 'Block Content',
   name: 'contentBlock',
   type: 'object',
+  icon: StringIcon,
   fields: [
     defineField({
       title: 'Block Name',

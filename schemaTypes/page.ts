@@ -12,10 +12,15 @@ export const Page = defineType({
   title: 'Page',
   icon: DocumentIcon,
   type: 'document',
+  groups: [
+    { name: 'main', title: 'Main', default: true},
+    { name: 'seo', title: 'SEO'}
+  ],
   fields: [
     defineField({
       title: 'Title',
       name: 'title',
+      group: ['main', 'seo'],
       type: 'string',
       validation: (rule) =>
         rule.custom(
@@ -32,6 +37,7 @@ export const Page = defineType({
       name: 'slug',
       title: 'Slug (URL)',
       type: 'slug',
+      group: ['main', 'seo'],
       options: {
         source:'title',
         slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
@@ -52,14 +58,23 @@ export const Page = defineType({
     defineField({
       name: 'date',
       title: 'Date',
+      group: ['seo'],
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'meta',
+      title: 'SEO',
+      type: 'metaTags',
+      group: 'seo',
+    }),
+    defineField({
       name: 'pageBuilder',
       title: 'Page Builder',
+      group: ['main'],
       type: 'array',
+      // hidden: ({document}) => document?.title == 'Articles' || document?.title == 'Blog',
       of: [
         defineArrayMember({
           name: 'contentBlock',
@@ -80,18 +95,38 @@ export const Page = defineType({
         defineArrayMember({
           name: 'cta',
           type: 'cta',
-        })
+        }),
+        defineArrayMember({
+          name: 'jumbotron',
+          type: 'jumbotron',
+        }),
+        defineArrayMember({
+          name: 'faqs',
+          title: 'FAQs',
+          type: 'reference',
+          to: [{type: 'faqsList'}],
+        }),
+        defineArrayMember({
+          name: 'columnsBlock',
+          type: 'columnsBlock',
+        }),
       ]
     }),
+    defineField({
+      name: 'featuredPosts',
+      title: 'Featured Posts',
+      group: ['main'],
+      type: 'array',
+      hidden: ({document}) => document?.title != 'Articles',
+      of: [
+        defineArrayMember({
+          name: 'posts',
+          type: 'reference',
+          to: [
+            {type: 'post'}
+          ],
+        }),
+      ],
+    })
   ],
-  // preview: {
-  //     select: {
-  //         title: 'slug.current',
-  //         subtitle: 'title',
-  //         media: 'picture'
-  //     },
-  //     prepare(selection) {
-  //         return selection
-  //     }
-  // }
 })

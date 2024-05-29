@@ -1,48 +1,46 @@
 import {defineField, defineType} from 'sanity'
-import {DocumentTextIcon} from '@sanity/icons'
+import {SquareIcon} from '@sanity/icons'
 
-export const heroType = defineType({
-  name: 'heroBlock',
+export const ColumnItem = defineType({
+  name: 'columnItem',
   type: 'object',
-  title: 'Hero',
-  icon: DocumentTextIcon,
+  title: 'Column Item',
+  icon: SquareIcon,
   fields: [
     defineField({
-      name: 'heading',
+      title: 'headline',
+      name: 'headline',
       type: 'string',
     }),
     defineField({
-      name: 'tagline',
-      type: 'string',
+      name: 'content',
+      type: 'blockContent',
+      title: 'Content',
     }),
     defineField({
       name: 'image',
       type: 'image',
+      title: 'Image Background',
       options: {hotspot: true},
       fields: [
         defineField({
           name: 'alt',
           type: 'string',
-          title: 'Alternative text',
+          title: 'Image Alt Text',
         }),
       ],
-    }),
-    defineField({
-      title: 'Button',
-      name: 'button',
-      type: 'button',
     }),
   ],
   preview: {
     select: {
-      title: 'heading',
+      title: 'headline',
       image: 'image',
     },
     prepare({title, image}) {
       return {
         title: title || 'Untitled',
-        subtitle: 'Hero',
-        media: image || DocumentTextIcon,
+        subtitle: 'Column',
+        media: image || SquareIcon,
       }
     }
   }

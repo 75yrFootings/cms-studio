@@ -10,31 +10,30 @@ export const SiteSettings = defineType({
       title: 'Site Name',
       type: 'string',
     }),
-    
-    // defineField({
-    //   title: 'Menu Order',
-    //   name: 'navOrder',
-    //   group: 'navMenu',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'reference',
-    //       to: [{type: 'page'}],
-    //       options: {
-    //         disableNew: true,
-    //         filter: ({document}) => {
-    //           // console.log(document)
-    //           const ids = (document as any).navOrder.map((doc: { _ref: any; }) => doc._ref).filter(Boolean)
-    //           // console.log(ids)
-    //           return {
-    //             filter: '!(_id in $ids)',
-    //             params: {ids}
-    //           }
-    //         }
-    //       }
-    //     }
-    //   ],
-    //   // validation: Rule => Rule.unique()
-    // })
+    defineField({
+      name: 'hours',
+      title: 'Working Hours',
+      type: 'string'
+    }),
+    defineField({
+      name: 'showHours',
+      title: 'Show Hours',
+      type: 'boolean',
+    }),
+    defineField({
+      name: 'phone',
+      title: 'Business Phone',
+      type: 'string',
+    }),
+    defineField({
+      name: 'email',
+      title: 'Business Email',
+      type: 'string',
+    }),
+    defineField({
+      name: 'showEmail',
+      title: 'Show Email',
+      type: 'boolean',
+    }),
   ]
 })

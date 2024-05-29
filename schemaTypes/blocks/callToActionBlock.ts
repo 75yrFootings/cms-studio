@@ -6,6 +6,7 @@ export const CallToAction = defineType({
   name: 'cta',
   type: 'document',
   title: 'Call To Action',
+  icon: ConfettiIcon,
   fields: [
     defineField({
       title: 'Headline',

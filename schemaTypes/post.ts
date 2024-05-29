@@ -10,10 +10,15 @@ export const Post = defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  groups: [
+    { name: 'main', title: 'Main', default: true},
+    { name: 'seo', title: 'SEO'}
+  ],
   fields: [
     defineField({
       title: 'Title',
       name: 'title',
+      group: ['main', 'seo'],
       type: 'string',
       validation: (rule) =>
         rule.custom(
@@ -29,6 +34,7 @@ export const Post = defineType({
     defineField({
       name: 'slug',
       title: 'Slug (URL)',
+      group: ['main', 'seo'],
       type: 'slug',
       options: {
         source:'title',
@@ -50,6 +56,7 @@ export const Post = defineType({
     defineField({
       name: 'publishedAt',
       title: 'Published At',
+      group: ['seo'],
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required(),
@@ -57,26 +64,42 @@ export const Post = defineType({
     defineField({
       name: 'author',
       title: 'Author',
+      group: ['seo'],
       type: 'reference',
       to: {type: 'author'},
     }),
     defineField({
+      name: 'meta',
+      title: 'SEO',
+      type: 'metaTags',
+      group: 'seo',
+    }),
+    defineField({
       name: 'mainImage',
       title: 'Main image',
+      group: ['main'],
       type: 'image',
       options: {
         hotspot: true,
       },
     }),
     defineField({
+      name: 'imageAlt',
+      title: 'Image Alt Text',
+      type: 'string',
+      group: 'main',
+    }),
+    defineField({
       name: 'categories',
       title: 'Categories',
+      group: ['main'],
       type: 'array',
       of: [{type: 'reference', to: {type: 'category'}}],
     }),
     defineField({
       name: 'body',
       title: 'Body',
+      group: ['main'],
       type: 'blockContent',
     }),
   ],

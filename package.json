@@ -15,7 +15,6 @@
     "sanity"
   ],
   "dependencies": {
-    "@nuagedelait/sanity-pagebuilder": "^1.1.1",
     "@sanity/vision": "^3.40.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -1,30 +1,24 @@
 import {defineField, defineType} from 'sanity'
-import {InlineIcon} from '@sanity/icons'
+import {InsertAboveIcon, ImageIcon} from '@sanity/icons'
 
-export const TextWithImage = defineType({
-  name: 'textWithImage',
+export const Jumbotron = defineType({
+  name: 'jumbotron',
   type: 'object',
-  title: 'Text with Image',
-  icon: InlineIcon,
+  title: 'Jumbotron',
+  icon: ImageIcon,
   fields: [
     defineField({
-      name: 'tagline',
+      title: 'Title',
+      name: 'title',
       type: 'string',
     }),
     defineField({
-      name: 'heading',
-      type: 'string',
+      title: 'Content',
+      name: 'body',
+      type: 'text',
     }),
     defineField({
-      title: 'Switch Layout',
-      name: 'switchLayout',
-      type: 'boolean'
-    }),
-    defineField({
-      name: 'content',
-      type: 'blockContent',
-    }),
-    defineField({
+      title: 'Background Image',
       name: 'image',
       type: 'image',
       options: {hotspot: true},
@@ -50,14 +44,14 @@ export const TextWithImage = defineType({
   ],
   preview: {
     select: {
-      title: 'heading',
+      title: 'title',
       image: 'image',
     },
     prepare({title, image}) {
       return {
         title: title || 'Untitled',
-        subtitle: 'Text with Image',
-        media: image || InlineIcon,
+        subtitle: 'Jumbotron',
+        media: image || InsertAboveIcon,
       }
     }
   }

@@ -5,6 +5,7 @@ export const ImageGallery = defineType({
   name: 'gallery',
   type: 'object',
   title: 'Gallery',
+  icon: ImagesIcon,
   fields: [
     defineField({
       title: 'Name',

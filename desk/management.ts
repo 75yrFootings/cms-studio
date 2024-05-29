@@ -6,17 +6,10 @@ export default function ManagementStructure(S: any) {
   .id('management')
   .title('Management')
   .items([
-    // S.listItem()
-    //   .title('Front Page')
-    //   .schemaType('frontPage')
-    //   .child(
-    //     S.document()
-    //       .title('Home Page')
-    //       .documentId('fontPage')
-    //       .schemaType('frontPage')
-    //   ),
     S.documentTypeListItem('menu').title('Menus'),
     S.documentTypeListItem('author').title('Authors'),
     S.documentTypeListItem('category').title('Categories'),
+    S.documentTypeListItem('testimonial').title('Testimonials'),
+    S.documentTypeListItem('faqsList').title('FAQs'),
   ])
 }

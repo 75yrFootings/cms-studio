@@ -9,6 +9,6 @@ export const Button = defineType({
   },
   fields: [
     defineField({name: 'text', type: 'string', title: 'Button Text'}),
-    defineField({name: 'link', type: 'url', title: 'Button Link'}),
+    defineField({name: 'link', type: 'string', title: 'Button Link'}),
   ]
 })
